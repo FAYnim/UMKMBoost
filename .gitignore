@@ -1,3 +1,56 @@
-AGENTS.md
-PRD.md
-.github
+# Project specific files to keep private
+# AGENTS.md  # Commented out - keep for development reference
+# PRD.md     # Commented out - keep for development reference
+
+# Node modules
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build directories
+dist/
+build/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# API Keys and sensitive data
+config/
+secrets/
+*.key
+*.pem
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# Package lock files (optional)
+package-lock.json
+yarn.lock
