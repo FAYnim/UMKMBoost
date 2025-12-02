@@ -1,0 +1,368 @@
+/* ========================================
+   AI Tools Page Styles
+   Specific styles for AI tools pages
+   ======================================== */
+
+/* ========================================
+   HEADER & NAVIGATION (AI Tools specific)
+   ======================================== */
+
+.header {
+    background: linear-gradient(135deg, var(--primary-green), var(--secondary-navy));
+    color: white;
+    padding: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px; 
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.nav {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+
+.nav-link:hover, .nav-link.active {
+    background: rgba(255,255,255,0.2);
+    border-color: rgba(255,255,255,0.3);
+}
+
+/* ========================================
+   MAIN CONTENT & LAYOUT
+   ======================================== */
+
+.main-content {
+    min-height: calc(100vh - 80px);
+    padding: 2rem 0;
+}
+
+.page-container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 1rem;
+    max-width: 600px; 
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.page-title {
+    color: var(--primary-green);
+    margin-bottom: 0.5rem;
+}
+
+.page-description {
+    color: var(--gray-500);
+    font-size: 15px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+/* ========================================
+   AI TOOLS SPECIFIC COMPONENTS
+   ======================================== */
+
+/* Results Container */
+.results-container {
+    margin-top: 2rem;
+    padding: 2rem;
+    background: var(--gray-50);
+    border-radius: 16px;
+    border: 1px solid var(--gray-200);
+}
+
+/* Ideas Grid */
+.ideas-grid {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.idea-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--gray-200);
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.idea-card:hover {
+    border-color: var(--primary-green);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.idea-title {
+    font-weight: 600;
+    color: var(--gray-900);
+    margin-bottom: 0.5rem;
+}
+
+.idea-description {
+    color: var(--gray-600);
+    font-size: 15px;
+    margin-bottom: 1rem;
+}
+
+.idea-meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 13px;
+    color: var(--gray-500);
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    background: var(--gray-100);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+/* Output Sections */
+.output-section {
+    margin-bottom: 2rem;
+}
+
+.output-section h4 {
+    margin-bottom: 1rem;
+    color: var(--gray-700);
+}
+
+.output-box {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--gray-200);
+    margin-bottom: 1rem;
+    font-size: 15px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    position: relative;
+}
+
+.layout-preview {
+    font-family: 'Courier New', monospace;
+    background: var(--gray-50);
+}
+
+/* Copy Button in Output Box */
+.output-box .btn-copy {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.5rem 1rem;
+    font-size: 12px;
+}
+
+/* Tool Navigation */
+.tool-nav {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.tool-nav-link {
+    padding: 0.75rem 1.5rem;
+    background: white;
+    color: var(--gray-700);
+    text-decoration: none;
+    border-radius: 8px;
+    border: 1px solid var(--gray-300);
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.tool-nav-link:hover,
+.tool-nav-link.active {
+    background: var(--primary-green);
+    color: white;
+    border-color: var(--primary-green);
+}
+
+/* Tool Sections */
+.tool-section {
+    display: none;
+}
+
+.tool-section.active {
+    display: block;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* ========================================
+   PRODUCT SELECTION IN AI PAGES
+   ======================================== */
+
+.product-selection {
+    margin-bottom: 1.5rem;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.selected-product-card {
+    background: linear-gradient(135deg, #f0f9f6 0%, #e6f3ef 100%);
+    border: 2px solid var(--primary-green);
+    border-radius: 12px;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.selected-product-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.selected-product-info .label {
+    font-size: 0.85rem;
+    color: var(--gray-600);
+    font-weight: 500;
+}
+
+.selected-product-info strong {
+    font-size: 1.1rem;
+    color: var(--primary-green);
+}
+
+.btn-change-product {
+    background: white;
+    color: var(--primary-green);
+    border: 1px solid var(--primary-green);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-change-product:hover {
+    background: var(--primary-green);
+    color: white;
+}
+
+/* Product Selector Modal/Dropdown */
+.product-selector {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.product-selector-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid var(--gray-300);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 10;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.product-option {
+    padding: 1rem;
+    border-bottom: 1px solid var(--gray-200);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.product-option:hover {
+    background: var(--gray-50);
+}
+
+.product-option:last-child {
+    border-bottom: none;
+}
+
+.product-option-name {
+    font-weight: 500;
+    color: var(--gray-900);
+}
+
+.product-option-price {
+    font-size: 14px;
+    color: var(--primary-green);
+    font-weight: 600;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+@media (min-width: 640px) {
+    .ideas-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .nav {
+        gap: 1rem;
+    }
+    
+    .tool-nav {
+        gap: 1rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .page-container {
+        max-width: 768px;
+    }
+    
+    .ideas-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .idea-meta {
+        gap: 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .page-container {
+        max-width: 1024px;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .header, .nav, .btn, .tool-nav { display: none; }
+    .page-container { max-width: none; }
+    .output-box { border: 1px solid black; }
+    * { color: black !important; }
+}

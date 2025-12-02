@@ -1,0 +1,436 @@
+/* ========================================
+   Home/Landing Page Styles
+   Specific styles for index.html
+   ======================================== */
+
+/* ========================================
+   HEADER & NAVIGATION
+   ======================================== */
+
+.header {
+    background: linear-gradient(135deg, var(--primary-green), var(--secondary-navy));
+    color: white;
+    padding: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px; 
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.nav {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+
+.nav-link:hover, .nav-link.active {
+    background: rgba(255,255,255,0.2);
+    border-color: rgba(255,255,255,0.3);
+}
+
+.nav-auth {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-name {
+    font-weight: 500;
+    color: white;
+}
+
+.btn-logout {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-logout:hover {
+    background: rgba(255,255,255,0.3);
+    border-color: rgba(255,255,255,0.5);
+}
+
+/* ========================================
+   MAIN CONTENT & LAYOUT
+   ======================================== */
+
+.main-content {
+    min-height: calc(100vh - 80px);
+    padding: 2rem 0;
+}
+
+.page-container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 1rem;
+    max-width: 600px; 
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.page-title {
+    color: var(--primary-green);
+    margin-bottom: 0.5rem;
+}
+
+.page-description {
+    color: var(--gray-500);
+    font-size: 15px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+/* ========================================
+   HERO SECTION
+   ======================================== */
+
+.hero {
+    text-align: center;
+    padding: 2rem 0 3rem;
+}
+
+.hero-title {
+    font-size: 2.25rem;
+    color: var(--gray-900);
+    margin-bottom: 1rem;
+}
+
+.hero-description {
+    font-size: 18px;
+    color: var(--gray-500);
+    max-width: 500px;
+    margin: 0 auto 3rem;
+}
+
+.hero-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.hero-cta {
+    font-size: 18px;
+    padding: 1.25rem 2.5rem;
+}
+
+.hero-secondary {
+    color: var(--gray-600);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.hero-secondary:hover {
+    background: var(--gray-100);
+    color: var(--gray-900);
+}
+
+/* ========================================
+   FEATURE GRID
+   ======================================== */
+
+.feature-grid {
+    display: grid;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.feature-card {
+    background: white;
+    border: 2px solid var(--gray-100);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    text-decoration: none;
+    color: inherit;
+}
+
+.feature-card:hover {
+    border-color: var(--primary-green);
+    box-shadow: 0 4px 12px rgba(11,115,80,0.15);
+    transform: translateY(-2px);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.feature-card h3 {
+    color: var(--gray-900);
+    margin-bottom: 1rem;
+}
+
+.feature-card p {
+    color: var(--gray-500);
+    font-size: 15px;
+    margin-bottom: 1.5rem;
+}
+
+.feature-action {
+    font-weight: 600;
+    color: var(--primary-green);
+    font-size: 14px;
+}
+
+/* ========================================
+   ABOUT SECTION
+   ======================================== */
+
+.about {
+    padding: 3rem 0;
+}
+
+.about h3 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--gray-900);
+}
+
+.benefit-list {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.benefit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.benefit-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    margin-top: 0.25rem;
+}
+
+.benefit-item h4 {
+    color: var(--gray-900);
+    margin-bottom: 0.5rem;
+}
+
+.benefit-item p {
+    color: var(--gray-600);
+    font-size: 15px;
+    margin: 0;
+}
+
+/* ========================================
+   CTA SECTION
+   ======================================== */
+
+.cta-section {
+    background: linear-gradient(135deg, var(--primary-green), var(--secondary-navy));
+    color: white;
+    padding: 3rem 0;
+    text-align: center;
+    border-radius: 16px;
+    margin: 3rem 0;
+}
+
+.cta-section h2 {
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.cta-section p {
+    font-size: 18px;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.cta-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.btn-cta-primary {
+    background: white;
+    color: var(--primary-green);
+    font-weight: 600;
+}
+
+.btn-cta-primary:hover {
+    background: var(--gray-100);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.btn-cta-secondary {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+.btn-cta-secondary:hover {
+    background: rgba(255,255,255,0.2);
+    border-color: rgba(255,255,255,0.5);
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+
+.footer {
+    background: var(--gray-100);
+    padding: 2rem 0;
+    text-align: center;
+    color: var(--gray-600);
+    border-top: 1px solid var(--gray-200);
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.footer-logo {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary-green);
+    margin: 0;
+}
+
+.footer-links {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.footer-link {
+    color: var(--gray-600);
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.footer-link:hover {
+    color: var(--primary-green);
+}
+
+.footer-copyright {
+    font-size: 12px;
+    color: var(--gray-500);
+    margin: 0;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+@media (min-width: 640px) {
+    .feature-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .nav {
+        gap: 1rem;
+    }
+    
+    .hero-title {
+        font-size: 3rem;
+    }
+    
+    .hero-actions {
+        flex-direction: row;
+        justify-content: center;
+    }
+    
+    .cta-buttons {
+        flex-direction: row;
+        justify-content: center;
+    }
+    
+    .footer-content {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+@media (min-width: 768px) {
+    .hero {
+        padding: 3rem 0 4rem;
+    }
+    
+    .hero-title {
+        font-size: 3.5rem;
+    }
+    
+    .hero-description {
+        font-size: 20px;
+    }
+    
+    .feature-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .benefit-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        max-width: 1200px;
+    }
+    
+    .page-container {
+        max-width: 1200px;
+    }
+    
+    .hero {
+        padding: 4rem 0 5rem;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .header, .nav, .btn, .cta-section { display: none; }
+    .page-container { max-width: none; }
+    * { color: black !important; }
+}
