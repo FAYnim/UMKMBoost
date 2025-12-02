@@ -8,37 +8,184 @@
     
     <!-- CSS -->
     <link rel="stylesheet" href="src/css/style.css">
+    <link rel="stylesheet" href="src/css/dashboard.css">
     
     <!-- Font Inter & Poppins dari Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
 </head>
-<body>
-    <!-- Navigation Header -->
-    <header class="header">
-        <div class="container">
-            <h1 class="logo">
-                <a href="index.html">🤖 AI UMKM</a>
+<body class="dashboard-body">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h1 class="sidebar-logo">
+                🤖 AI UMKM
             </h1>
-            <nav class="nav">
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="dashboard.html" class="nav-link">Dashboard</a>
-                <a href="products.html" class="nav-link active">Produk</a>
-                <a href="ai-tools.html" class="nav-link">AI Tools</a>
-                <!-- Placeholder untuk auth -->
-                <div class="nav-auth">
-                    <span class="user-name">Demo User</span>
-                    <button class="btn-logout">Logout</button>
-                </div>
-            </nav>
+            <button class="sidebar-close" id="sidebar-close">✕</button>
         </div>
-    </header>
+        
+        <nav class="sidebar-nav">
+            <a href="index.html" class="sidebar-link">
+                <span class="sidebar-icon">🏠</span>
+                <span class="sidebar-text">Home</span>
+            </a>
+            <a href="dashboard.html" class="sidebar-link">
+                <span class="sidebar-icon">📊</span>
+                <span class="sidebar-text">Dashboard</span>
+            </a>
+            <a href="products.html" class="sidebar-link active">
+                <span class="sidebar-icon">📦</span>
+                <span class="sidebar-text">Produk</span>
+            </a>
+            <a href="ai-tools.html" class="sidebar-link">
+                <span class="sidebar-icon">✨</span>
+                <span class="sidebar-text">AI Tools</span>
+            </a>
+            <a href="ai-tools.html#ideas" class="sidebar-link sub">
+                <span class="sidebar-icon">💡</span>
+                <span class="sidebar-text">Ide Konten</span>
+            </a>
+            <a href="ai-tools.html#caption" class="sidebar-link sub">
+                <span class="sidebar-icon">✍️</span>
+                <span class="sidebar-text">Caption AI</span>
+            </a>
+            <a href="ai-tools.html#poster" class="sidebar-link sub">
+                <span class="sidebar-icon">🎨</span>
+                <span class="sidebar-text">Design Poster</span>
+            </a>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <div class="user-avatar">👤</div>
+                <div class="user-details">
+                    <p class="user-name">Demo User</p>
+                    <p class="user-role">UMKM Owner</p>
+                </div>
+            </div>
+            <button class="btn-logout">Logout</button>
+        </div>
+    </aside>
 
-    <!-- Main Content -->
-    <main id="app" class="main-content">
-        <!-- Load existing products page content -->
-    </main>
+    <!-- Mobile Overlay -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <!-- Main Content Area -->
+    <div class="main-wrapper">
+        
+        <!-- Top Header (Mobile) -->
+        <header class="top-header">
+            <button class="sidebar-toggle" id="sidebar-toggle">☰</button>
+            <h2 class="page-title">📦 Kelola Produk</h2>
+            <div class="header-actions">
+                <button class="btn btn-small btn-primary" id="add-product-mobile">
+                    ➕ Tambah
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="dashboard-content" id="app">
+            
+            <!-- Products Section -->
+            <section class="products-section">
+                <div class="section-header">
+                    <h1 class="page-title">📦 Kelola Produk</h1>
+                    <p class="page-description">Tambah, edit, dan kelola produk UMKM Anda untuk promosi AI</p>
+                </div>
+
+                <!-- Action Bar -->
+                <div class="action-bar">
+                    <button class="btn btn-primary" id="add-product-btn">
+                        ➕ Tambah Produk Baru
+                    </button>
+                </div>
+
+                <!-- Form Container (Hidden by default) -->
+                <div class="form-container hidden" id="product-form-container">
+                    <div class="form-card">
+                        <div class="form-header">
+                            <h3 id="form-title">Tambah Produk Baru</h3>
+                            <button class="btn-close" id="close-form">✕</button>
+                        </div>
+
+                        <form id="product-form">
+                            <div class="form-group">
+                                <label for="product-name">Nama Produk *</label>
+                                <input type="text" id="product-name" class="form-input" required placeholder="Contoh: Kopi Arabica Premium">
+                                <small class="form-hint">Nama produk yang menarik dan mudah diingat</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="product-price">Harga *</label>
+                                <input type="number" id="product-price" class="form-input" required placeholder="25000" min="0">
+                                <small class="form-hint">Harga dalam Rupiah (tanpa titik atau koma)</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="product-category">Kategori *</label>
+                                <select id="product-category" class="form-select" required>
+                                    <option value="">Pilih Kategori</option>
+                                    <option value="makanan">Makanan</option>
+                                    <option value="minuman">Minuman</option>
+                                    <option value="fashion">Fashion</option>
+                                    <option value="kerajinan">Kerajinan</option>
+                                    <option value="jasa">Jasa</option>
+                                    <option value="elektronik">Elektronik</option>
+                                    <option value="kesehatan">Kesehatan & Kecantikan</option>
+                                    <option value="lainnya">Lainnya</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="product-description">Deskripsi Produk</label>
+                                <textarea id="product-description" class="form-textarea" placeholder="Ceritakan detail produk Anda: bahan, keunggulan, cara pembuatan, dll."></textarea>
+                                <small class="form-hint">Deskripsi akan membantu AI membuat konten yang lebih akurat</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="product-image">URL Gambar (Opsional)</label>
+                                <input type="url" id="product-image" class="form-input" placeholder="https://example.com/gambar-produk.jpg">
+                                <small class="form-hint">Link gambar produk untuk ditampilkan di kartu produk</small>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary" id="cancel-form">Batal</button>
+                                <button type="submit" class="btn btn-primary" id="save-product">
+                                    <span id="save-text">Simpan Produk</span>
+                                    <div class="btn-spinner hidden" id="save-spinner"></div>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Products Container -->
+                <div class="products-container">
+                    <h3 class="section-subtitle" id="products-title">Produk Anda</h3>
+                    
+                    <!-- Empty State -->
+                    <div class="empty-state" id="empty-state">
+                        <div class="empty-icon">📦</div>
+                        <h3>Belum Ada Produk</h3>
+                        <p>Tambahkan produk pertama Anda untuk mulai membuat konten promosi dengan AI</p>
+                        <button class="btn btn-primary" onclick="document.getElementById('add-product-btn').click()">
+                            ➕ Tambah Produk Pertama
+                        </button>
+                    </div>
+
+                    <!-- Products Grid -->
+                    <div class="products-grid hidden" id="products-grid">
+                        <!-- Products akan di-render oleh JavaScript -->
+                    </div>
+                </div>
+
+            </section>
+
+        </main>
+    </div>
 
     <!-- Toast Notification -->
     <div id="toast" class="toast hidden">
@@ -48,24 +195,41 @@
     <!-- JavaScript -->
     <script src="src/js/utils.js"></script>
     <script src="src/js/ai-products.js"></script>
-    <script src="src/js/dashboard.js"></script>
 
     <script>
-        // Load products page content
-        document.addEventListener('DOMContentLoaded', async function() {
-            try {
-                const response = await fetch('src/pages/products.html');
-                const html = await response.text();
-                document.getElementById('app').innerHTML = html;
-                
-                // Initialize products page
+        // Fungsi sederhana untuk toggle sidebar (mobile)
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        // Event listeners untuk sidebar dan products
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            const sidebarClose = document.getElementById('sidebar-close');
+            const sidebarOverlay = document.getElementById('sidebar-overlay');
+            const addProductMobile = document.getElementById('add-product-mobile');
+            const addProductBtn = document.getElementById('add-product-btn');
+
+            // Sidebar events
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', toggleSidebar);
+            sidebarOverlay.addEventListener('click', toggleSidebar);
+
+            // Mobile add product button
+            addProductMobile.addEventListener('click', function() {
+                addProductBtn.click();
+            });
+
+            // Initialize products page
+            if (typeof initializeProductsPage === 'function') {
                 initializeProductsPage();
-                
-            } catch (error) {
-                console.error('Error loading products page:', error);
-                document.getElementById('app').innerHTML = '<div class="error">Error loading page</div>';
             }
         });
     </script>
+
 </body>
 </html>
