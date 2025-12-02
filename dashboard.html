@@ -15,36 +15,85 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
 </head>
-<body>
-    <!-- Top Navigation Header -->
-    <header class="header">
-        <div class="container">
-            <h1 class="logo">
-                <a href="index.html">🤖 AI UMKM</a>
+<body class="dashboard-body">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h1 class="sidebar-logo">
+                🤖 AI UMKM
             </h1>
-            <nav class="nav">
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="dashboard.html" class="nav-link active">Dashboard</a>
-                <a href="products.html" class="nav-link">Produk</a>
-                <a href="ai-tools.html" class="nav-link">AI Tools</a>
-                <!-- Placeholder untuk auth -->
-                <div class="nav-auth">
-                    <span class="user-name">Demo User</span>
-                    <button class="btn-logout">Logout</button>
-                </div>
-            </nav>
+            <button class="sidebar-close" id="sidebar-close">✕</button>
         </div>
-    </header>
+        
+        <nav class="sidebar-nav">
+            <a href="index.html" class="sidebar-link">
+                <span class="sidebar-icon">🏠</span>
+                <span class="sidebar-text">Home</span>
+            </a>
+            <a href="dashboard.html" class="sidebar-link active">
+                <span class="sidebar-icon">📊</span>
+                <span class="sidebar-text">Dashboard</span>
+            </a>
+            <a href="products.html" class="sidebar-link">
+                <span class="sidebar-icon">📦</span>
+                <span class="sidebar-text">Produk</span>
+            </a>
+            <a href="ai-tools.html" class="sidebar-link">
+                <span class="sidebar-icon">✨</span>
+                <span class="sidebar-text">AI Tools</span>
+            </a>
+            <a href="ai-tools.html#ideas" class="sidebar-link sub">
+                <span class="sidebar-icon">💡</span>
+                <span class="sidebar-text">Ide Konten</span>
+            </a>
+            <a href="ai-tools.html#caption" class="sidebar-link sub">
+                <span class="sidebar-icon">✍️</span>
+                <span class="sidebar-text">Caption AI</span>
+            </a>
+            <a href="ai-tools.html#poster" class="sidebar-link sub">
+                <span class="sidebar-icon">🎨</span>
+                <span class="sidebar-text">Design Poster</span>
+            </a>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <div class="user-avatar">👤</div>
+                <div class="user-details">
+                    <p class="user-name">Demo User</p>
+                    <p class="user-role">UMKM Owner</p>
+                </div>
+            </div>
+            <button class="btn-logout">Logout</button>
+        </div>
+    </aside>
 
-    <!-- Dashboard Main Content -->
-    <main class="dashboard-main">
-        <div class="container">
+    <!-- Mobile Overlay -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <!-- Main Content Area -->
+    <div class="main-wrapper">
+        
+        <!-- Top Header (Mobile) -->
+        <header class="top-header">
+            <button class="sidebar-toggle" id="sidebar-toggle">☰</button>
+            <h2 class="page-title">📊 Dashboard Bisnis</h2>
+            <div class="header-actions">
+                <button class="btn btn-small btn-primary" onclick="location.href='products.html'">
+                    ➕ Produk
+                </button>
+            </div>
+        </header>
+
+        <!-- Dashboard Main Content -->
+        <main class="dashboard-content">
             
             <!-- Dashboard Header -->
             <section class="dashboard-header">
                 <div class="welcome-section">
-                    <h1 class="dashboard-title">📊 Dashboard Bisnis</h1>
-                    <p class="dashboard-subtitle">Selamat datang di pusat kontrol AI Marketing Anda</p>
+                    <h1 class="dashboard-title">Selamat datang kembali! 👋</h1>
+                    <p class="dashboard-subtitle">Ringkasan bisnis Anda hari ini</p>
                     <p class="last-login">Login terakhir: <span id="last-login-time">2 Desember 2025, 14:30</span></p>
                 </div>
                 <div class="dashboard-actions">
@@ -213,20 +262,8 @@
                 </div>
             </section>
 
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 AI UMKM. Platform AI untuk UMKM Indonesia.</p>
-            <p>
-                <a href="privacy.html">Kebijakan Privasi</a> | 
-                <a href="terms.html">Syarat & Ketentuan</a> |
-                <a href="help.html">Bantuan</a>
-            </p>
-        </div>
-    </footer>
+        </main>
+    </div>
 
     <!-- Toast Notification -->
     <div id="toast" class="toast hidden">
@@ -238,8 +275,29 @@
     <script src="src/js/dashboard.js"></script>
 
     <script>
-        // Initialize dashboard saat halaman load
+        // Fungsi sederhana untuk toggle sidebar (mobile)
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        // Event listeners untuk sidebar
         document.addEventListener('DOMContentLoaded', function() {
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            const sidebarClose = document.getElementById('sidebar-close');
+            const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+            // Buka sidebar
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            
+            // Tutup sidebar
+            sidebarClose.addEventListener('click', toggleSidebar);
+            sidebarOverlay.addEventListener('click', toggleSidebar);
+
+            // Initialize dashboard
             initializeDashboard();
         });
     </script>
