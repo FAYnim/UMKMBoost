@@ -200,6 +200,7 @@
     <!-- JavaScript -->
     <script src="src/js/utils.js"></script>
     <script src="src/js/auth.js"></script>
+    <script src="src/js/db-products.js"></script>
     <script src="src/js/ai-products.js"></script>
 
     <script>
@@ -272,6 +273,9 @@
             const sidebarOverlay = document.getElementById('sidebar-overlay');
             const addProductMobile = document.getElementById('add-product-mobile');
             const addProductBtn = document.getElementById('add-product-btn');
+            const productForm = document.getElementById('product-form');
+            const closeFormBtn = document.getElementById('close-form');
+            const cancelFormBtn = document.getElementById('cancel-form');
 
             // Sidebar events
             sidebarToggle.addEventListener('click', toggleSidebar);
@@ -281,6 +285,25 @@
             // Mobile add product button
             addProductMobile.addEventListener('click', function() {
                 addProductBtn.click();
+            });
+            
+            // Add product button click
+            addProductBtn.addEventListener('click', function() {
+                showAddProductForm();
+            });
+            
+            // Form submission
+            productForm.addEventListener('submit', function(e) {
+                handleSubmitProduct(e);
+            });
+            
+            // Close form buttons
+            closeFormBtn.addEventListener('click', function() {
+                closeProductForm();
+            });
+            
+            cancelFormBtn.addEventListener('click', function() {
+                closeProductForm();
             });
 
             // Initialize products page
