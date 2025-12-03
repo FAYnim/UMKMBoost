@@ -79,17 +79,76 @@
         <p id="toast-message">Pesan berhasil disalin!</p>
     </div>
 
+    <!-- Supabase Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <!-- JavaScript -->
     <script src="src/js/utils.js"></script>
+    <script src="src/js/auth.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Handle login form submission (placeholder)
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Check if already authenticated, redirect to dashboard
+            await redirectIfAuthenticated();
+            
+            // Handle login form submission
             const loginForm = document.getElementById('loginForm');
             
             if (loginForm) {
-                loginForm.addEventListener('submit', function(e) {
+                loginForm.addEventListener('submit', async function(e) {
                     e.preventDefault();
-                    showToast('Fitur login akan segera tersedia!');
+                    
+                    // Get form values
+                    const email = document.getElementById('loginEmail').value.trim();
+                    const password = document.getElementById('loginPassword').value;
+                    
+                    // Validation
+                    if (!email) {
+                        showToast('Email harus diisi!');
+                        return;
+                    }
+                    
+                    if (!password) {
+                        showToast('Kata sandi harus diisi!');
+                        return;
+                    }
+                    
+                    // Disable submit button
+                    const submitBtn = loginForm.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.textContent;
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Masuk...';
+                    
+                    // Login with Supabase
+                    const result = await Auth.login(email, password);
+                    
+                    if (result.success) {
+                        showToast('Login berhasil! Mengalihkan...');
+                        
+                        // Store last login time
+                        localStorage.setItem('lastLogin', new Date().toISOString());
+                        
+                        // Redirect to dashboard
+                        setTimeout(() => {
+                            window.location.href = 'dashboard.html';
+                        }, 1000);
+                    } else {
+                        // Handle error
+                        let errorMessage = 'Login gagal! ';
+                        
+                        if (result.error.includes('Invalid login credentials')) {
+                            errorMessage += 'Email atau kata sandi salah.';
+                        } else if (result.error.includes('Email not confirmed')) {
+                            errorMessage += 'Silakan konfirmasi email Anda terlebih dahulu.';
+                        } else {
+                            errorMessage += result.error;
+                        }
+                        
+                        showToast(errorMessage);
+                        
+                        // Re-enable submit button
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = originalText;
+                    }
                 });
             }
         });

@@ -89,20 +89,40 @@
         <p id="toast-message">Pesan berhasil disalin!</p>
     </div>
 
+    <!-- Supabase Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <!-- JavaScript -->
     <script src="src/js/utils.js"></script>
+    <script src="src/js/auth.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Handle register form submission (placeholder)
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Check if already authenticated, redirect to dashboard
+            await redirectIfAuthenticated();
+            
+            // Handle register form submission
             const signupForm = document.getElementById('signupForm');
             
             if (signupForm) {
-                signupForm.addEventListener('submit', function(e) {
+                signupForm.addEventListener('submit', async function(e) {
                     e.preventDefault();
                     
-                    // Simple password confirmation check
+                    // Get form values
+                    const name = document.getElementById('signupName').value.trim();
+                    const email = document.getElementById('signupEmail').value.trim();
                     const password = document.getElementById('signupPassword').value;
                     const confirmPassword = document.getElementById('signupPasswordConfirm').value;
+                    
+                    // Validation
+                    if (!name) {
+                        showToast('Nama lengkap harus diisi!');
+                        return;
+                    }
+                    
+                    if (!email) {
+                        showToast('Email harus diisi!');
+                        return;
+                    }
                     
                     if (password !== confirmPassword) {
                         showToast('Kata sandi dan konfirmasi tidak sama!');
@@ -114,7 +134,43 @@
                         return;
                     }
                     
-                    showToast('Fitur daftar akan segera tersedia!');
+                    // Disable submit button
+                    const submitBtn = signupForm.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.textContent;
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Mendaftar...';
+                    
+                    // Register with Supabase
+                    const result = await Auth.register(email, password, name);
+                    
+                    if (result.success) {
+                        showToast('Pendaftaran berhasil! Silakan cek email untuk konfirmasi.');
+                        
+                        // Clear form
+                        signupForm.reset();
+                        
+                        // Redirect to login after 2 seconds
+                        setTimeout(() => {
+                            window.location.href = 'login.html';
+                        }, 2000);
+                    } else {
+                        // Handle error
+                        let errorMessage = 'Pendaftaran gagal! ';
+                        
+                        if (result.error.includes('already registered')) {
+                            errorMessage += 'Email sudah terdaftar.';
+                        } else if (result.error.includes('Invalid email')) {
+                            errorMessage += 'Format email tidak valid.';
+                        } else {
+                            errorMessage += result.error;
+                        }
+                        
+                        showToast(errorMessage);
+                        
+                        // Re-enable submit button
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = originalText;
+                    }
                 });
             }
         });

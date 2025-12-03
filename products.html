@@ -63,11 +63,11 @@
             <div class="user-info">
                 <div class="user-avatar"><i class="fas fa-user"></i></div>
                 <div class="user-details">
-                    <p class="user-name">Demo User</p>
+                    <p class="user-name" id="user-name">Demo User</p>
                     <p class="user-role">UMKM Owner</p>
                 </div>
             </div>
-            <button class="btn-logout">Logout</button>
+            <button class="btn-logout"  id="btn-logout">Logout</button>
         </div>
     </aside>
 
@@ -194,8 +194,12 @@
         <p id="toast-message">Pesan berhasil disalin!</p>
     </div>
 
+    <!-- Supabase Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <!-- JavaScript -->
     <script src="src/js/utils.js"></script>
+    <script src="src/js/auth.js"></script>
     <script src="src/js/ai-products.js"></script>
 
     <script>
@@ -208,8 +212,61 @@
             overlay.classList.toggle('active');
         }
 
+        // Event listeners untuk sidebar
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Check authentication first
+            const isAuth = await requireAuth();
+            
+            if (!isAuth) {
+                return; // User will be redirected to login
+            }
+            
+            // Load user info
+            const { success, user } = await Auth.getCurrentUser();
+            if (success && user) {
+                const userNameEl = document.getElementById('user-name');
+                if (userNameEl) {
+                    userNameEl.textContent = user.user_metadata?.full_name || user.email;
+                }
+            }
+            
+            // Setup logout button
+            const logoutBtn = document.getElementById('btn-logout');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', async function() {
+                    const result = await Auth.logout();
+                    
+                    if (result.success) {
+                        window.location.href = 'login.html';
+                    } else {
+                        alert('Gagal logout: ' + result.error);
+                    }
+                });
+            }
+            
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            const sidebarClose = document.getElementById('sidebar-close');
+            const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+            // Buka sidebar
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            
+            // Tutup sidebar
+            sidebarClose.addEventListener('click', toggleSidebar);
+            sidebarOverlay.addEventListener('click', toggleSidebar);
+
+            // Initialize dashboard
+            initializeDashboard();
+        });
+    
+
         // Event listeners untuk sidebar dan products
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Check authentication first
+            const isAuth = await requireAuth();
+            if (!isAuth) {
+                return;
+            }
             const sidebarToggle = document.getElementById('sidebar-toggle');
             const sidebarClose = document.getElementById('sidebar-close');
             const sidebarOverlay = document.getElementById('sidebar-overlay');
