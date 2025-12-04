@@ -24,6 +24,7 @@
                 <span></span>
                 <span></span>
             </button>
+            <div class="nav-backdrop" id="navBackdrop"></div>
             <div class="nav-links" id="navLinks">
                 <a href="#beranda" class="nav-link active">Beranda</a>
                 <a href="#fitur" class="nav-link">Fitur</a>
@@ -279,12 +280,28 @@
             // Handle hamburger menu
             const hamburger = document.querySelector('.hamburger');
             const navLinks = document.querySelector('.nav-links');
+            const navBackdrop = document.querySelector('.nav-backdrop');
+            
+            // Close menu function
+            const closeMenu = () => {
+                navLinks.classList.remove('open');
+                hamburger.classList.remove('open');
+                hamburger.setAttribute('aria-expanded', 'false');
+                document.body.classList.remove('nav-open');
+            };
             
             if (hamburger) {
                 hamburger.addEventListener('click', function() {
-                    navLinks.classList.toggle('active');
-                    hamburger.classList.toggle('active');
+                    navLinks.classList.toggle('open');
+                    hamburger.classList.toggle('open');
+                    hamburger.setAttribute('aria-expanded', hamburger.classList.contains('open'));
+                    document.body.classList.toggle('nav-open');
                 });
+            }
+            
+            // Close menu when clicking backdrop
+            if (navBackdrop) {
+                navBackdrop.addEventListener('click', closeMenu);
             }
             
             // Handle smooth scrolling for navigation links
@@ -303,12 +320,7 @@
                         }
                         
                         // Close mobile menu
-                        if (navLinks) {
-                            navLinks.classList.remove('active');
-                        }
-                        if (hamburger) {
-                            hamburger.classList.remove('active');
-                        }
+                        closeMenu();
                         
                         // Update active state
                         navLinksElements.forEach(nl => nl.classList.remove('active'));
