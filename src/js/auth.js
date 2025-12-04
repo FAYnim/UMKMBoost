@@ -31,7 +31,7 @@ const Auth = {
     },
 
     // Login user
-    async login(email, password) {
+    async login(email, password, rememberMe = false) {
         try {
             const { data, error } = await supabase.auth.signInWithPassword({
                 email: email,
@@ -39,6 +39,16 @@ const Auth = {
             });
 
             if (error) throw error;
+            
+            // Jika login berhasil, simpan ke cookie (jika fungsi tersedia)
+            if (data.user) {
+                if (typeof window.saveAuthSession === 'function') {
+                    window.saveAuthSession(email, rememberMe);
+                }
+                if (typeof window.trackLoginStats === 'function') {
+                    window.trackLoginStats();
+                }
+            }
             
             return { success: true, data: data };
         } catch (error) {
@@ -53,6 +63,11 @@ const Auth = {
             const { error } = await supabase.auth.signOut();
             if (error) throw error;
             
+            // Hapus semua cookie auth saat logout (jika fungsi tersedia)
+            if (typeof window.clearAuthSession === 'function') {
+                window.clearAuthSession();
+            }
+            
             return { success: true };
         } catch (error) {
             console.error('Logout error:', error);
@@ -63,21 +78,39 @@ const Auth = {
     // Get current user
     async getCurrentUser() {
         try {
+            // First try to get user from Supabase session
             const { data: { user }, error } = await supabase.auth.getUser();
             
+            // If no error and user exists, return user
+            if (!error && user) {
+                return { success: true, user: user };
+            }
+            
+            // If AuthSessionMissingError, it's expected for non-authenticated users
+            if (error && error.message.includes('Auth session missing')) {
+                return { success: true, user: null };
+            }
+            
+            // For other errors, throw them
             if (error) throw error;
             
-            return { success: true, user: user };
+            return { success: true, user: null };
         } catch (error) {
             console.error('Get user error:', error);
+            
+            // If session missing, it's not really an error - user just not logged in
+            if (error.message.includes('Auth session missing')) {
+                return { success: true, user: null };
+            }
+            
             return { success: false, error: error.message };
         }
     },
 
     // Check if user is authenticated
     async isAuthenticated() {
-        const { user } = await this.getCurrentUser();
-        return user !== null;
+        const { success, user } = await this.getCurrentUser();
+        return success && user !== null;
     },
 
     // Listen to auth state changes
@@ -92,12 +125,82 @@ const Auth = {
         try {
             const { data: { session }, error } = await supabase.auth.getSession();
             
+            // If AuthSessionMissingError, return null session (not an error)
+            if (error && error.message.includes('Auth session missing')) {
+                return { success: true, session: null };
+            }
+            
             if (error) throw error;
             
             return { success: true, session: session };
         } catch (error) {
             console.error('Get session error:', error);
+            
+            // Handle session missing as normal case
+            if (error.message.includes('Auth session missing')) {
+                return { success: true, session: null };
+            }
+            
             return { success: false, error: error.message };
+        }
+    },
+
+    // Check if user has remember me enabled
+    hasRememberMe() {
+        if (typeof window.hasRememberMe === 'function') {
+            return window.hasRememberMe();
+        }
+        return false;
+    },
+
+    // Get remembered email for auto-fill
+    getRememberedEmail() {
+        if (typeof window.getAuthSession === 'function') {
+            const session = window.getAuthSession();
+            return session.email || '';
+        }
+        return '';
+    },
+
+    // Get login statistics
+    getLoginStats() {
+        if (typeof window.getLoginStats === 'function') {
+            return window.getLoginStats();
+        }
+        return { totalLogins: 0, lastLoginDate: null, lastLoginTime: null };
+    },
+
+    // Initialize auth system and check for valid session
+    async initAuth() {
+        try {
+            // Check if we have a valid Supabase session
+            const { success, session } = await this.getSession();
+            
+            if (success && session && session.user) {
+                // Valid session exists, user is authenticated
+                console.log('Valid session found:', session.user.email);
+                return { authenticated: true, user: session.user };
+            }
+            
+            // No valid session, check for remember me cookie
+            if (typeof window.hasRememberMe === 'function' && window.hasRememberMe()) {
+                console.log('No active session but remember me is enabled');
+                // Clear cookie since session is invalid
+                if (typeof window.clearAuthSession === 'function') {
+                    window.clearAuthSession();
+                }
+            }
+            
+            return { authenticated: false, user: null };
+        } catch (error) {
+            console.error('Auth initialization error:', error);
+            
+            // Clear potentially corrupted cookies
+            if (typeof window.clearAuthSession === 'function') {
+                window.clearAuthSession();
+            }
+            
+            return { authenticated: false, user: null };
         }
     }
 };
