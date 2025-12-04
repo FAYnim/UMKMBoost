@@ -10,6 +10,9 @@ let editingProductId = null;
 async function initializeProductsPage() {
     console.log('📦 Initialize Products Page');
     
+    // Show loading state
+    showLoadingState();
+    
     // Load products dari Supabase
     await loadProducts();
     
@@ -28,13 +31,51 @@ async function loadProducts() {
         } else {
             console.error('❌ Error loading products:', result.error);
             products = [];
+            // Hide loading state even on error
+            hideLoadingState();
+            // Enable tombol meskipun error
+            enableAddProductButtons();
             showToast('Gagal memuat produk: ' + result.error, 'error');
         }
     } catch (error) {
         console.error('❌ Error loading products:', error);
         products = [];
+        // Hide loading state even on error
+        hideLoadingState();
+        // Enable tombol meskipun error
+        enableAddProductButtons();
         showToast('Gagal memuat produk', 'error');
     }
+}
+
+// Fungsi untuk show loading state
+function showLoadingState() {
+    const loadingState = document.getElementById('loading-state');
+    const emptyState = document.getElementById('empty-state');
+    const productsGrid = document.getElementById('products-grid');
+    
+    if (loadingState) {
+        loadingState.classList.remove('hidden');
+    }
+    if (emptyState) {
+        emptyState.classList.add('hidden');
+    }
+    if (productsGrid) {
+        productsGrid.classList.add('hidden');
+    }
+    
+    // Tombol sudah disabled dari awal, tidak perlu disable lagi di sini
+}
+
+// Fungsi untuk hide loading state
+function hideLoadingState() {
+    const loadingState = document.getElementById('loading-state');
+    
+    if (loadingState) {
+        loadingState.classList.add('hidden');
+    }
+    
+    // Tombol akan di-enable di renderProducts, tidak di sini
 }
 
 // Fungsi untuk render products ke grid
@@ -46,6 +87,12 @@ function renderProducts() {
         console.error('Products grid or empty state not found');
         return;
     }
+    
+    // Hide loading state terlebih dahulu
+    hideLoadingState();
+    
+    // Enable tombol setelah selesai loading (baik ada produk atau empty)
+    enableAddProductButtons();
     
     // Show empty state jika tidak ada produk
     if (products.length === 0) {
@@ -321,6 +368,38 @@ function generateId() {
     return 'prod_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
 }
 
+// Fungsi untuk disable tombol tambah produk
+function disableAddProductButtons() {
+    const addProductBtn = document.getElementById('add-product-btn');
+    const addProductMobile = document.getElementById('add-product-mobile');
+    
+    if (addProductBtn) {
+        addProductBtn.disabled = true;
+        addProductBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memuat...';
+    }
+    
+    if (addProductMobile) {
+        addProductMobile.disabled = true;
+        addProductMobile.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memuat';
+    }
+}
+
+// Fungsi untuk enable tombol tambah produk
+function enableAddProductButtons() {
+    const addProductBtn = document.getElementById('add-product-btn');
+    const addProductMobile = document.getElementById('add-product-mobile');
+    
+    if (addProductBtn) {
+        addProductBtn.disabled = false;
+        addProductBtn.innerHTML = '<i class="fas fa-plus"></i> Tambah Produk Baru';
+    }
+    
+    if (addProductMobile) {
+        addProductMobile.disabled = false;
+        addProductMobile.innerHTML = '<i class="fas fa-plus"></i> Tambah';
+    }
+}
+
 // Fungsi untuk use product for AI promotion
 function useProductForAI(productId) {
     const product = getProductById(productId);
@@ -374,6 +453,23 @@ function clearSelectedProduct() {
     localStorage.removeItem('selected_product');
 }
 
+// Fungsi untuk refresh products (reload dari database)
+async function refreshProducts() {
+    console.log('🔄 Refreshing products...');
+    
+    // Disable tombol saat refresh
+    disableAddProductButtons();
+    
+    // Show loading state
+    showLoadingState();
+    
+    // Load products dari Supabase
+    await loadProducts();
+    
+    // Render products
+    renderProducts();
+}
+
 // Export functions ke global scope
 window.initializeProductsPage = initializeProductsPage;
 window.showAddProductForm = showAddProductForm;
@@ -385,3 +481,6 @@ window.useProductForAI = useProductForAI;
 window.getAllProducts = getAllProducts;
 window.getSelectedProduct = getSelectedProduct;
 window.clearSelectedProduct = clearSelectedProduct;
+window.refreshProducts = refreshProducts;
+window.showLoadingState = showLoadingState;
+window.hideLoadingState = hideLoadingState;

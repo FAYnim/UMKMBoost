@@ -74,8 +74,8 @@
             <button class="sidebar-toggle" id="sidebar-toggle"><i class="fas fa-bars"></i></button>
             <h2 class="page-title"><i class="fas fa-box"></i> Kelola Produk</h2>
             <div class="header-actions">
-                <button class="btn btn-small btn-primary" id="add-product-mobile">
-                    <i class="fas fa-plus"></i> Tambah
+                <button class="btn btn-small btn-primary" id="add-product-mobile" disabled>
+                    <i class="fas fa-spinner fa-spin"></i> Memuat
                 </button>
             </div>
         </header>
@@ -92,8 +92,8 @@
 
                 <!-- Action Bar -->
                 <div class="action-bar">
-                    <button class="btn btn-primary" id="add-product-btn">
-                        <i class="fas fa-plus"></i> Tambah Produk Baru
+                    <button class="btn btn-primary" id="add-product-btn" disabled>
+                        <i class="fas fa-spinner fa-spin"></i> Memuat...
                     </button>
                 </div>
 
@@ -160,8 +160,21 @@
                 <div class="products-container">
                     <h3 class="section-subtitle" id="products-title">Produk Anda</h3>
                     
+                    <!-- Loading State -->
+                    <div class="loading-state" id="loading-state">
+                        <div class="loading-container">
+                            <div class="loading-spinner">
+                                <div class="spinner"></div>
+                            </div>
+                            <div class="loading-content">
+                                <h3>Memuat Produk...</h3>
+                                <p>Sedang mengambil data produk dari database</p>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <!-- Empty State -->
-                    <div class="empty-state" id="empty-state">
+                    <div class="empty-state hidden" id="empty-state">
                         <div class="empty-icon"><i class="fas fa-box-open"></i></div>
                         <h3>Belum Ada Produk</h3>
                         <p>Tambahkan produk pertama Anda untuk mulai membuat konten promosi dengan AI</p>
