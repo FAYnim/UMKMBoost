@@ -1,4 +1,5 @@
 const fetch = require('node-fetch'); // Netlify Functions perlu node-fetch
+const { GoogleGenAI } = require('@google/genai'); // Google GenAI SDK
 
 exports.handler = async (event) => {
   // CORS
