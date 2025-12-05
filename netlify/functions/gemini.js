@@ -1,7 +1,7 @@
-const fetch = require('node-fetch'); // Netlify Functions perlu node-fetch
-const { GoogleGenAI } = require('@google/genai'); // Google GenAI SDK
-
 exports.handler = async (event) => {
+  // Dynamic imports untuk ES modules
+  const fetch = (await import('node-fetch')).default;
+  const { GoogleGenAI } = await import('@google/genai');
   // CORS
   const headers = {
     'Content-Type': 'application/json',
