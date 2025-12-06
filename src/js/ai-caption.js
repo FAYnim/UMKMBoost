@@ -191,45 +191,5 @@ function generateDefaultCTA(topic) {
     return ctas[Math.floor(Math.random() * ctas.length)];
 }
 
-// Fungsi untuk load selected product dari localStorage
-function loadSelectedProductForCaption() {
-    const product = getSelectedProduct();
-    
-    if (product) {
-        // Show product selection card
-        const selectionDiv = document.getElementById('product-selection');
-        const productNameSpan = document.getElementById('selected-product-name');
-        const topicInput = document.getElementById('captionTopic');
-        
-        if (selectionDiv && productNameSpan && topicInput) {
-            selectionDiv.classList.remove('hidden');
-            productNameSpan.textContent = product.name;
-            
-            // Auto-fill topic with product info
-            topicInput.value = `Promo ${product.name} - ${product.description.substring(0, 50)}...`;
-        }
-    }
-}
-
-// Fungsi untuk clear selected product
-function clearSelectedProductForCaption() {
-    clearSelectedProduct();
-    
-    // Hide product selection card
-    const selectionDiv = document.getElementById('product-selection');
-    const topicInput = document.getElementById('captionTopic');
-    
-    if (selectionDiv) {
-        selectionDiv.classList.add('hidden');
-    }
-    
-    if (topicInput) {
-        topicInput.value = '';
-    }
-    
-    showToast('Produk dihapus dari caption', 'success');
-}
-
 // Export functions untuk global access
 window.initializeCaptionPage = initializeCaptionPage;
-window.clearSelectedProductForCaption = clearSelectedProductForCaption;
