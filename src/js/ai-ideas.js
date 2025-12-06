@@ -121,7 +121,9 @@ function getInstructionFile(contentGoal) {
 function createIdeasPrompt(formData) {
     const { businessType, contentGoal, platform } = formData;
 
+    console.log('🔍 Checking getSelectedProduct availability:', typeof getSelectedProduct);
     const selectedProduct = getSelectedProduct();
+    console.table(selectedProduct)
     
     return `Generate ide konten untuk UMKM dengan detail:
 
