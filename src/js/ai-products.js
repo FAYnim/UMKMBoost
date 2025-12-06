@@ -424,6 +424,10 @@ function getSelectedProduct() {
 // Fungsi untuk clear selected product
 function clearSelectedProduct() {
     localStorage.removeItem('selected_product');
+    const productInfo = document.getElementById('selected-product-info');
+    if (productInfo) {
+        productInfo.classList.add('hidden');
+    }
 }
 
 // Fungsi untuk refresh products (reload dari database)
