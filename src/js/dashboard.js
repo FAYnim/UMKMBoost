@@ -67,12 +67,9 @@ async function loadDashboardData() {
         }
         
         // Load AI usage stats dari localStorage
-        const aiUsage = localStorage.getItem('umkm_ai_usage');
-        dashboardData.aiUsage = aiUsage ? parseInt(aiUsage) || 0 : 0;
-        
-        // Load content generated count dari localStorage
-        const contentGenerated = localStorage.getItem('umkm_content_generated');
-        dashboardData.contentGenerated = contentGenerated ? parseInt(contentGenerated) || 0 : 0;
+        const { aiUsage, contentGenerated } = await fetchAIUsageStats();
+        dashboardData.aiUsage = aiUsage;
+        dashboardData.contentGenerated = contentGenerated;
         
         // Set last login time
         dashboardData.lastLogin = new Date().toLocaleString('id-ID');
@@ -87,6 +84,49 @@ async function loadDashboardData() {
         dashboardData.aiUsage = 0;
         dashboardData.contentGenerated = 0;
         dashboardData.lastLogin = new Date().toLocaleString('id-ID');
+    }
+}
+
+// Ambil statistik AI usage dari Supabase (fallback ke localStorage jika error)
+async function fetchAIUsageStats() {
+    const fallback = () => {
+        const aiUsageLS = localStorage.getItem('umkm_ai_usage');
+        const contentLS = localStorage.getItem('umkm_content_generated');
+        return {
+            aiUsage: aiUsageLS ? parseInt(aiUsageLS) || 0 : 0,
+            contentGenerated: contentLS ? parseInt(contentLS) || 0 : 0
+        };
+    };
+
+    try {
+        if (typeof supabase === 'undefined') {
+            return fallback();
+        }
+
+        // Pastikan user sudah login (RLS membutuhkan user_id)
+        const { data: { user }, error: userError } = await supabase.auth.getUser();
+        if (userError || !user) {
+            return fallback();
+        }
+
+        // Hitung total usage
+        const { count, error } = await supabase
+            .from('ai_usage')
+            .select('*', { count: 'exact', head: true });
+
+        if (error) {
+            console.error('❌ Error fetching ai_usage stats:', error.message);
+            return fallback();
+        }
+
+        // Kita anggap setiap baris = 1 konten generated
+        return {
+            aiUsage: count || 0,
+            contentGenerated: count || 0
+        };
+    } catch (err) {
+        console.error('❌ Unexpected error fetching ai_usage stats:', err);
+        return fallback();
     }
 }
 
