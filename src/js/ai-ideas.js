@@ -130,7 +130,9 @@ function createIdeasPrompt(formData) {
 Jenis Usaha: ${businessType}
 Tujuan Konten: ${contentGoal}
 Platform: ${platform}
-Produk: ${selectedProduct}
+Nama Produk: ${selectedProduct.name}
+Deskripsi Produk: ${selectedProduct.description}
+
 
 Berikan 3-4 ide konten yang kreatif, praktis, dan mudah dieksekusi untuk UMKM.`;
 }
