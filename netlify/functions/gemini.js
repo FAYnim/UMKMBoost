@@ -25,6 +25,9 @@ Tidak perlu penjelasan lain di luar JSON.`;
 
 async function loadInstructionsFile(instructionsFile) {
   if (!instructionsFile) return "";
+  if (typeof instructionsFile !== "string") {
+    throw new Error("instructionsFile harus berupa string");
+  }
 
   const safeName = path.basename(instructionsFile);
   const candidatePaths = [
