@@ -120,12 +120,15 @@ function getInstructionFile(contentGoal) {
 // Fungsi untuk create prompt untuk AI
 function createIdeasPrompt(formData) {
     const { businessType, contentGoal, platform } = formData;
+
+    const selectedProduct = getSelectedProduct();
     
     return `Generate ide konten untuk UMKM dengan detail:
 
 Jenis Usaha: ${businessType}
 Tujuan Konten: ${contentGoal}
 Platform: ${platform}
+Produk: ${selectedProduct}
 
 Berikan 3-4 ide konten yang kreatif, praktis, dan mudah dieksekusi untuk UMKM.`;
 }
