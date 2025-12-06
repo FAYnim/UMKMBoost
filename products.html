@@ -188,6 +188,41 @@
         </main>
     </div>
 
+    <!-- Custom Pop Up - Pilih Jenis Promosi -->
+    <div class="promo-popup-overlay hidden" id="promo-popup-overlay">
+        <div class="promo-popup">
+            <div class="promo-popup-header">
+                <h3>Pilih Jenis Promosi AI</h3>
+                <button class="promo-popup-close" id="promo-popup-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="promo-popup-content">
+                <p class="promo-popup-subtitle">Produk <strong id="selected-product-name"></strong> siap dipromosikan!</p>
+                <p class="promo-popup-description">Pilih jenis konten promosi yang ingin Anda buat:</p>
+                
+                <div class="promo-options">
+                    <button class="promo-option-card" id="promo-ideas-btn">
+                        <div class="promo-option-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h4>Ide Konten</h4>
+                        <p>Dapatkan ide konten kreatif untuk promosi produk Anda</p>
+                    </button>
+                    
+                    <button class="promo-option-card" id="promo-caption-btn">
+                        <div class="promo-option-icon">
+                            <i class="fas fa-pen-fancy"></i>
+                        </div>
+                        <h4>Caption AI</h4>
+                        <p>Buat caption menarik siap posting untuk produk Anda</p>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Toast Notification -->
     <div id="toast" class="toast hidden">
         <p id="toast-message">Pesan berhasil disalin!</p>
@@ -303,6 +338,42 @@
             // Initialize products page
             if (typeof initializeProductsPage === 'function') {
                 initializeProductsPage();
+            }
+            
+            // Event listeners untuk promo popup
+            const promoPopupClose = document.getElementById('promo-popup-close');
+            const promoPopupOverlay = document.getElementById('promo-popup-overlay');
+            const promoIdeasBtn = document.getElementById('promo-ideas-btn');
+            const promoCaptionBtn = document.getElementById('promo-caption-btn');
+            
+            // Close popup dengan tombol X
+            if (promoPopupClose) {
+                promoPopupClose.addEventListener('click', function() {
+                    closePromoPopup();
+                });
+            }
+            
+            // Close popup ketika klik di luar popup
+            if (promoPopupOverlay) {
+                promoPopupOverlay.addEventListener('click', function(e) {
+                    if (e.target === promoPopupOverlay) {
+                        closePromoPopup();
+                    }
+                });
+            }
+            
+            // Redirect ke halaman Ide Konten
+            if (promoIdeasBtn) {
+                promoIdeasBtn.addEventListener('click', function() {
+                    goToIdeasPage();
+                });
+            }
+            
+            // Redirect ke halaman Caption
+            if (promoCaptionBtn) {
+                promoCaptionBtn.addEventListener('click', function() {
+                    goToCaptionPage();
+                });
             }
         });
     </script>

@@ -664,3 +664,213 @@
         grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     }
 }
+
+/* ========================================
+   CUSTOM POP UP - PILIH JENIS PROMOSI
+   ======================================== */
+
+.promo-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 1rem;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.promo-popup-overlay.hidden {
+    display: none;
+}
+
+.promo-popup {
+    background: white;
+    border-radius: 20px;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.promo-popup-header {
+    background: linear-gradient(135deg, var(--primary-green), var(--secondary-navy));
+    color: white;
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.promo-popup-header h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.promo-popup-close {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: all 0.2s;
+}
+
+.promo-popup-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+}
+
+.promo-popup-content {
+    padding: 2rem;
+}
+
+.promo-popup-subtitle {
+    font-size: 1.1rem;
+    color: var(--gray-700);
+    margin: 0 0 0.5rem 0;
+    text-align: center;
+}
+
+.promo-popup-subtitle strong {
+    color: var(--primary-green);
+    font-weight: 600;
+}
+
+.promo-popup-description {
+    color: var(--gray-600);
+    margin: 0 0 2rem 0;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.promo-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+.promo-option-card {
+    background: var(--gray-50);
+    border: 2px solid var(--gray-200);
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.promo-option-card:hover {
+    background: white;
+    border-color: var(--primary-green);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(11, 115, 80, 0.15);
+}
+
+.promo-option-card:active {
+    transform: translateY(-2px);
+}
+
+.promo-option-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--primary-green), var(--secondary-navy));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    transition: transform 0.3s;
+}
+
+.promo-option-card:hover .promo-option-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.promo-option-card h4 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: var(--gray-900);
+    font-weight: 700;
+}
+
+.promo-option-card p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--gray-600);
+    line-height: 1.5;
+}
+
+/* Responsive Pop Up */
+@media (max-width: 640px) {
+    .promo-popup {
+        margin: 1rem;
+        border-radius: 16px;
+    }
+    
+    .promo-popup-header {
+        padding: 1.25rem 1.5rem;
+    }
+    
+    .promo-popup-header h3 {
+        font-size: 1.25rem;
+    }
+    
+    .promo-popup-content {
+        padding: 1.5rem;
+    }
+    
+    .promo-options {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .promo-option-card {
+        padding: 1.5rem 1rem;
+    }
+    
+    .promo-option-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+    
+    .promo-option-card h4 {
+        font-size: 1.1rem;
+    }
+    
+    .promo-option-card p {
+        font-size: 0.85rem;
+    }
+}

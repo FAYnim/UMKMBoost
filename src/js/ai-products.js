@@ -400,7 +400,62 @@ function useProductForAI(productId) {
     // Save selected product to localStorage untuk digunakan di halaman AI
     localStorage.setItem('selected_product', JSON.stringify(product));
     
-    showToast(`Produk "${product.name}" dipilih untuk promosi AI.`);
+    // Tampilkan custom pop up untuk pilih jenis promosi
+    showPromoPopup(product);
+}
+
+// Fungsi untuk menampilkan pop up pilih jenis promosi
+function showPromoPopup(product) {
+    const popup = document.getElementById('promo-popup-overlay');
+    const productNameEl = document.getElementById('selected-product-name');
+    
+    if (!popup || !productNameEl) {
+        console.error('Pop up elements not found');
+        return;
+    }
+    
+    // Set nama produk di pop up
+    productNameEl.textContent = product.name;
+    
+    // Tampilkan pop up
+    popup.classList.remove('hidden');
+    
+    // Prevent body scroll when pop up is open
+    document.body.style.overflow = 'hidden';
+}
+
+// Fungsi untuk menutup pop up promosi
+function closePromoPopup() {
+    const popup = document.getElementById('promo-popup-overlay');
+    
+    if (popup) {
+        popup.classList.add('hidden');
+    }
+    
+    // Re-enable body scroll
+    document.body.style.overflow = '';
+}
+
+// Fungsi untuk redirect ke halaman Ide Konten
+function goToIdeasPage() {
+    closePromoPopup();
+    showToast('Mengarahkan ke halaman Ide Konten...');
+    
+    // Redirect setelah delay kecil agar toast terlihat
+    setTimeout(() => {
+        window.location.href = 'ideas.html';
+    }, 500);
+}
+
+// Fungsi untuk redirect ke halaman Caption
+function goToCaptionPage() {
+    closePromoPopup();
+    showToast('Mengarahkan ke halaman Caption AI...');
+    
+    // Redirect setelah delay kecil agar toast terlihat
+    setTimeout(() => {
+        window.location.href = 'caption.html';
+    }, 500);
 }
 
 // Fungsi untuk get all products (untuk digunakan di halaman lain)
@@ -461,3 +516,7 @@ window.clearSelectedProduct = clearSelectedProduct;
 window.refreshProducts = refreshProducts;
 window.showLoadingState = showLoadingState;
 window.hideLoadingState = hideLoadingState;
+window.showPromoPopup = showPromoPopup;
+window.closePromoPopup = closePromoPopup;
+window.goToIdeasPage = goToIdeasPage;
+window.goToCaptionPage = goToCaptionPage;
