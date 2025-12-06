@@ -242,6 +242,12 @@ const Auth = {
         }
     },
 
+    // Get access token from stored session
+    getAccessToken() {
+        const session = getStoredSession();
+        return session ? session.access_token : null;
+    },
+
     // Get session
     async getSession() {
         try {
