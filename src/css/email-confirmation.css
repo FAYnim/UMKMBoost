@@ -1,0 +1,196 @@
+/* ========================================
+   EMAIL CONFIRMATION PAGE STYLES
+   Dedicated styling for confirmation status page
+   ======================================== */
+
+/* Header & Navigation */
+.header {
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-navy) 100%);
+    color: white;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+.nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.nav-links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.nav-links .nav-content .nav-link {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    font-size: 16px;
+}
+
+.nav-links .nav-content .nav-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.logo {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.logo a {
+    color: white;
+    text-decoration: none;
+}
+
+.logo-img {
+    height: 50px;
+    width: auto;
+    max-width: 200px;
+    object-fit: contain;
+    filter: brightness(0) saturate(100%) invert(100%);
+}
+
+/* Main Content */
+.main-content {
+    min-height: calc(100vh - 160px);
+    display: flex;
+    flex-direction: column;
+}
+
+.login-section {
+    flex: 1;
+}
+
+/* Features Section (Status Container) */
+.features {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--gray-200);
+    overflow: hidden;
+    width: 100%;
+}
+
+.card h3 {
+    font-size: 1.5rem;
+    color: var(--gray-800);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+/* Status Card */
+.status-card {
+    text-align: center;
+    padding: 1.5rem;
+    border-top: 1px solid var(--gray-200);
+}
+
+.status-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 32px;
+    color: white;
+}
+
+.status-icon.success { background: var(--primary-green); }
+.status-icon.pending { background: var(--warning-yellow); }
+.status-icon.error { background: var(--danger-red); }
+
+.status-message {
+    color: var(--gray-700);
+    margin-bottom: 1rem;
+}
+
+.status-note {
+    color: var(--gray-500);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+}
+
+.status-actions .btn {
+    width: 100%;
+}
+
+/* Footer */
+.footer {
+    background: var(--gray-800);
+    color: white;
+    text-align: center;
+    padding: 2rem 1rem;
+    margin-top: auto;
+}
+
+.footer p {
+    margin: 0.25rem 0;
+    opacity: 0.9;
+}
+
+.footer p:first-child {
+    font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+    .logo {
+        font-size: 2rem;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .nav-content {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .features {
+        padding: 1rem 0.5rem;
+    }
+
+    .card > div {
+        padding: 1.5rem !important;
+    }
+
+    .status-note {
+        font-size: 0.9rem;
+    }
+}
+
+/* Focus states for accessibility */
+.nav-link:focus {
+    outline: 2px solid rgba(255, 255, 255, 0.5);
+    outline-offset: 2px;
+}
+
+.btn:focus {
+    outline: 2px solid var(--primary-green);
+    outline-offset: 2px;
+}

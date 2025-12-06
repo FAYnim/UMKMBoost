@@ -2,6 +2,7 @@
 // IMPORTANT: Ganti dengan kredensial Anda sendiri dari https://supabase.com
 const SUPABASE_URL = 'https://hgrpljzalzbinlillkij.supabase.co'; // Contoh: https://xxxxx.supabase.co
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhncnBsanphbHpiaW5saWxsa2lqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ4MDQzOTQsImV4cCI6MjA4MDM4MDM5NH0.IXyL3sGMumUiwLelDyteimQRMSQAPBcRstxsAHROEaQ';
+const EMAIL_REDIRECT_URL = `${window.location.origin}/email-confirmation.html`;
 
 // Initialize Supabase client
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -15,6 +16,7 @@ const Auth = {
                 email: email,
                 password: password,
                 options: {
+                    emailRedirectTo: EMAIL_REDIRECT_URL,
                     data: {
                         full_name: name
                     }
@@ -118,6 +120,42 @@ const Auth = {
         return supabase.auth.onAuthStateChange((event, session) => {
             callback(event, session);
         });
+    },
+
+    // Tukar code dari URL supaya sesi Supabase aktif setelah konfirmasi email
+    async exchangeCodeForSession(code) {
+        try {
+            const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+
+            if (error) throw error;
+
+            return { success: true, data: data };
+        } catch (error) {
+            console.error('Exchange code error:', error);
+            return { success: false, error: error.message };
+        }
+    },
+
+    // Cek apakah email user sudah terverifikasi
+    async isEmailVerified() {
+        try {
+            const { success, user, error } = await this.getCurrentUser();
+
+            if (!success || error) {
+                return { success: false, verified: false, error: error || 'Tidak bisa mendapatkan data user' };
+            }
+
+            if (!user) {
+                return { success: false, verified: false, error: 'User belum login' };
+            }
+
+            const verified = Boolean(user.email_confirmed_at);
+
+            return { success: true, verified: verified, user: user };
+        } catch (error) {
+            console.error('Email verification check error:', error);
+            return { success: false, verified: false, error: error.message };
+        }
     },
 
     // Get session
