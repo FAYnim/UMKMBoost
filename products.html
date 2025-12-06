@@ -134,9 +134,25 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="product-image">URL Gambar (Opsional)</label>
-                                <input type="url" id="product-image" class="form-input" placeholder="https://example.com/gambar-produk.jpg">
-                                <small class="form-hint">Link gambar produk untuk ditampilkan di kartu produk</small>
+                                <label for="product-image">Gambar Produk (Opsional)</label>
+                                <div class="image-input-switcher" role="tablist" aria-label="Pilih sumber gambar">
+                                    <button type="button" class="switch-btn active" data-target="url">Pakai URL</button>
+                                    <button type="button" class="switch-btn" data-target="upload">Upload File</button>
+                                </div>
+
+                                <div class="image-input-panel" id="image-url-panel">
+                                    <input type="url" id="product-image" class="form-input" placeholder="https://example.com/gambar-produk.jpg" aria-label="URL gambar produk">
+                                    <small class="form-hint">Tempel tautan gambar produk untuk ditampilkan di kartu produk</small>
+                                </div>
+
+                                <div class="image-input-panel hidden" id="image-upload-panel">
+                                    <input type="file" id="product-image-file" class="form-input" accept="image/*" aria-label="Upload gambar produk">
+                                    <small class="form-hint">Unggah file JPG/PNG maksimal 1MB</small>
+                                    <div class="image-preview" id="image-preview-box">
+                                        <div class="image-preview-placeholder" id="image-preview-placeholder">Pratinjau akan muncul di sini</div>
+                                        <img src="" alt="Pratinjau gambar produk" id="image-preview" class="hidden">
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="form-actions">

@@ -10,6 +10,10 @@ let editingProductId = null;
 async function initializeProductsPage() {
     console.log('📦 Initialize Products Page');
     
+    // Setup image input toggles & preview
+    setupImageInputSwitcher();
+    setupImageUploadPreview();
+
     // Show loading state
     showLoadingState();
     
@@ -18,6 +22,94 @@ async function initializeProductsPage() {
     
     // Render products
     renderProducts();
+}
+
+// Fungsi untuk setup tombol switch input gambar
+function setupImageInputSwitcher() {
+    const switchButtons = document.querySelectorAll('.image-input-switcher .switch-btn');
+    if (!switchButtons || switchButtons.length === 0) return;
+
+    switchButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            const target = button.getAttribute('data-target');
+            setImageInputMode(target);
+        });
+    });
+}
+
+// Fungsi untuk mengatur mode input gambar (url atau upload)
+function setImageInputMode(mode) {
+    const urlPanel = document.getElementById('image-url-panel');
+    const uploadPanel = document.getElementById('image-upload-panel');
+    const switchButtons = document.querySelectorAll('.image-input-switcher .switch-btn');
+    if (!urlPanel || !uploadPanel || switchButtons.length === 0) return;
+
+    switchButtons.forEach(function(btn) {
+        const target = btn.getAttribute('data-target');
+        if (target === mode) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+
+    if (mode === 'upload') {
+        urlPanel.classList.add('hidden');
+        uploadPanel.classList.remove('hidden');
+    } else {
+        urlPanel.classList.remove('hidden');
+        uploadPanel.classList.add('hidden');
+    }
+}
+
+// Fungsi untuk setup preview upload gambar
+function setupImageUploadPreview() {
+    const fileInput = document.getElementById('product-image-file');
+    const previewImg = document.getElementById('image-preview');
+    const placeholder = document.getElementById('image-preview-placeholder');
+    if (!fileInput || !previewImg || !placeholder) return;
+
+    fileInput.addEventListener('change', function() {
+        const file = fileInput.files && fileInput.files[0];
+
+        if (!file) {
+            resetImagePreview();
+            return;
+        }
+
+        if (!file.type.startsWith('image/')) {
+            showToast('❌ File harus berupa gambar (JPG/PNG)');
+            fileInput.value = '';
+            resetImagePreview();
+            return;
+        }
+
+        if (file.size > 2 * 1024 * 1024) {
+            showToast('❌ Ukuran gambar maksimal 2MB');
+            fileInput.value = '';
+            resetImagePreview();
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            previewImg.src = e.target.result;
+            previewImg.classList.remove('hidden');
+            placeholder.classList.add('hidden');
+        };
+        reader.readAsDataURL(file);
+    });
+}
+
+// Fungsi untuk reset preview upload
+function resetImagePreview() {
+    const previewImg = document.getElementById('image-preview');
+    const placeholder = document.getElementById('image-preview-placeholder');
+    if (!previewImg || !placeholder) return;
+
+    previewImg.src = '';
+    previewImg.classList.add('hidden');
+    placeholder.classList.remove('hidden');
 }
 
 // Fungsi untuk load products dari Supabase
@@ -176,6 +268,7 @@ function showAddProductForm() {
     
     // Reset form
     form.reset();
+    resetImageInputs();
     editingProductId = null;
     
     // Update title
@@ -203,6 +296,7 @@ function closeProductForm() {
     
     // Reset form
     form.reset();
+    resetImageInputs();
     editingProductId = null;
 }
 
@@ -307,6 +401,8 @@ function editProduct(productId) {
     document.getElementById('product-price').value = product.price;
     document.getElementById('product-description').value = product.description;
     document.getElementById('product-image').value = product.image || '';
+    setImageInputMode('url');
+    resetImagePreview();
     
     // Update form title
     document.getElementById('form-title').textContent = 'Edit Produk';
@@ -321,6 +417,23 @@ function editProduct(productId) {
     formContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
     
     editingProductId = productId;
+}
+
+// Fungsi untuk reset input gambar (url & upload)
+function resetImageInputs() {
+    const urlInput = document.getElementById('product-image');
+    const fileInput = document.getElementById('product-image-file');
+
+    if (urlInput) {
+        urlInput.value = '';
+    }
+
+    if (fileInput) {
+        fileInput.value = '';
+    }
+
+    resetImagePreview();
+    setImageInputMode('url');
 }
 
 // Fungsi untuk delete product
