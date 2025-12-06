@@ -214,6 +214,31 @@ function generateId() {
     return 'id_' + Math.random().toString(36).substr(2, 9);
 }
 
+// Simpan histori pemakaian AI ke Supabase (jika user login)
+async function logAIUsage(aiType, prompt, resultData, productId = null) {
+    try {
+        if (typeof supabase === 'undefined') return;
+
+        const { data: { user }, error: userError } = await supabase.auth.getUser();
+        if (userError || !user) return;
+
+        const payload = {
+            user_id: user.id,
+            ai_type: aiType,
+            prompt: typeof prompt === 'string' ? prompt : JSON.stringify(prompt),
+            result: typeof resultData === 'string' ? resultData : JSON.stringify(resultData),
+            product_id: productId || null
+        };
+
+        const { error } = await supabase.from('ai_usage').insert([payload]);
+        if (error) {
+            console.error('❌ Error logging AI usage:', error.message);
+        }
+    } catch (error) {
+        console.error('❌ Unexpected error logging AI usage:', error);
+    }
+}
+
 // Export functions ke global scope agar bisa dipakai di file lain
 window.Utils = {
     copyToClipboard,
@@ -228,7 +253,8 @@ window.Utils = {
     debounce,
     safeJsonParse,
     formatNumber,
-    generateId
+    generateId,
+    logAIUsage
 };
 
 // Export individual functions untuk backward compatibility
@@ -238,3 +264,4 @@ window.showButtonLoading = showButtonLoading;
 window.hideButtonLoading = hideButtonLoading;
 window.showElement = showElement;
 window.hideElement = hideElement;
+window.logAIUsage = logAIUsage;

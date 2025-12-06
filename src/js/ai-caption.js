@@ -48,6 +48,8 @@ async function handleCaptionSubmit(event) {
 // Fungsi utama untuk generate caption
 async function generateCaption(formData) {
     console.log('🔄 Generating caption with data:', formData);
+    const selectedProduct = getSelectedProduct();
+    let prompt = '';
     
     // Show loading
     Utils.showButtonLoading('generateCaptionBtn', 'Generating...');
@@ -60,7 +62,7 @@ async function generateCaption(formData) {
         console.log('📁 Instruction file:', instructionFile);
         
         // Create AI prompt
-        const prompt = createCaptionPrompt(formData);
+        prompt = createCaptionPrompt(formData);
         console.log('💭 AI Prompt:', prompt);
         
         // Check if callAI is available
@@ -79,6 +81,7 @@ async function generateCaption(formData) {
         
         // Display results
         displayCaption(captionData);
+        await Utils.logAIUsage('caption', prompt, captionData, selectedProduct ? selectedProduct.id : null);
         
         console.log('✅ AI Caption generated successfully');
         
@@ -89,6 +92,7 @@ async function generateCaption(formData) {
         // Fallback to dummy data jika AI error
         const fallbackCaption = getDummyCaption(formData);
         displayCaption(fallbackCaption);
+        await Utils.logAIUsage('caption', prompt || formData, { fallback: true, error: error.message, caption: fallbackCaption }, selectedProduct ? selectedProduct.id : null);
     } finally {
         // Hide loading
         Utils.hideButtonLoading('generateCaptionBtn', 'Generate Caption');

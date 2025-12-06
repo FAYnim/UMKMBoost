@@ -55,6 +55,8 @@ async function handleIdeasSubmit(event) {
 // Fungsi utama untuk generate ideas
 async function generateIdeas(formData) {
     console.log('🔄 Generating ideas with data:', formData);
+    const selectedProduct = getSelectedProduct();
+    let prompt = '';
     
     // Show loading
     Utils.showButtonLoading('generateBtn', 'Generating...');
@@ -67,7 +69,7 @@ async function generateIdeas(formData) {
         console.log('📁 Instruction file:', instructionFile);
         
         // Create AI prompt
-        const prompt = createIdeasPrompt(formData);
+        prompt = createIdeasPrompt(formData);
         console.log('💭 AI Prompt:', prompt);
         
         // Check if callAI is available
@@ -87,6 +89,7 @@ async function generateIdeas(formData) {
         
         // Display results
         displayIdeas(ideas);
+        await Utils.logAIUsage('ideas', prompt, ideas, selectedProduct ? selectedProduct.id : null);
         
         console.log('✅ AI Ideas generated successfully');
         
@@ -97,6 +100,7 @@ async function generateIdeas(formData) {
         // Fallback to dummy data jika AI error
         const fallbackIdeas = getDummyIdeas(formData);
         displayIdeas(fallbackIdeas);
+        await Utils.logAIUsage('ideas', prompt || formData, { fallback: true, error: error.message, ideas: fallbackIdeas }, selectedProduct ? selectedProduct.id : null);
     } finally {
         // Hide loading
         Utils.hideButtonLoading('generateBtn', 'Generate Ide Konten');
