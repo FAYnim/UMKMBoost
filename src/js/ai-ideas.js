@@ -109,7 +109,6 @@ function createIdeasPrompt(formData) {
     const { businessType, contentGoal, platform } = formData;
 
     const selectedProduct = getSelectedProduct();
-    console.table(selectedProduct)
     
     return `Generate ide konten untuk UMKM dengan detail:
 
@@ -263,7 +262,6 @@ function createIdeaCard(idea, index) {
 // Fungsi untuk copy idea
 function copyIdea(index) {
     const ideas = window.currentIdeas || [];
-    console.table(ideas);
     const idea = ideas[index];
     
     if (!idea) {
