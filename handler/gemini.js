@@ -1,8 +1,8 @@
 // Frontend: tidak perlu API key lagi
 async function callAI(prompt, instructionsFile, contentGoal) {
   const body = { prompt };
-  if (instructionsFile) body.instructionsFile = instructionsFile; // Optional override
-  if (contentGoal) body.contentGoal = contentGoal; // Backend will map if no file provided
+  if (instructionsFile) body.instructionsFile = instructionsFile; 
+  if (contentGoal) body.contentGoal = contentGoal; 
 
   const response = await fetch('/.netlify/functions/gemini', {
     method: 'POST',
@@ -13,7 +13,7 @@ async function callAI(prompt, instructionsFile, contentGoal) {
   if (!response.ok) {
     const { error } = await response.json();
     
-    // Check if error contains quota exceeded information
+    // chek kuota limit
     if (error && (error.includes('429') || error.includes('quota') || error.includes('RESOURCE_EXHAUSTED'))) {
       console.log('AI Limit: Free tier quota exceeded, system automatically switched to production API');
     }
