@@ -36,7 +36,7 @@ async function loadDashboardData() {
                 dashboardData.products = storedProducts ? JSON.parse(storedProducts) : [];
             }
         } else {
-            console.warn('⚠️ ProductsDB not available, using localStorage fallback');
+            // console.warn('⚠️ ProductsDB not available, using localStorage fallback');
             const storedProducts = localStorage.getItem('umkm_products');
             dashboardData.products = storedProducts ? JSON.parse(storedProducts) : [];
         }
