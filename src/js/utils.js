@@ -11,7 +11,6 @@ function copyToClipboard(elementId) {
     if (navigator.clipboard && window.isSecureContext) {
         navigator.clipboard.writeText(text).then(() => {
             showToast('✅ Berhasil disalin ke clipboard!');
-            console.log('📋 Text copied to clipboard');
         }).catch(err => {
             console.error('Failed to copy text: ', err);
             fallbackCopyText(text);
@@ -36,7 +35,6 @@ function fallbackCopyText(text) {
         const successful = document.execCommand('copy');
         if (successful) {
             showToast('✅ Berhasil disalin ke clipboard!');
-            console.log('📋 Text copied using fallback method');
         } else {
             showToast('❌ Gagal menyalin text');
         }
@@ -69,7 +67,6 @@ function showToast(message, duration = 3000) {
         toast.classList.add('hidden');
     }, duration);
     
-    console.log('🔔 Toast shown:', message);
 }
 
 function showButtonLoading(buttonId, loadingText = 'Loading...') {

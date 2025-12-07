@@ -7,7 +7,6 @@ let dashboardData = {
 };
 
 async function initializeDashboard() {
-    console.log('📊 Initialize Dashboard CRM');
     
     showDashboardLoading();
     
@@ -22,18 +21,15 @@ async function initializeDashboard() {
     
     setupRealTimeUpdates();
     
-    console.log('✅ Dashboard initialized successfully');
 }
 
 async function loadDashboardData() {
     try {
-        console.log('📊 Loading dashboard data from Supabase...');
         
         if (typeof ProductsDB !== 'undefined') {
             const productsResult = await ProductsDB.getAll();
             if (productsResult.success) {
                 dashboardData.products = productsResult.data;
-                console.log(`✅ Loaded ${productsResult.data.length} products from Supabase`);
             } else {
                 console.error('❌ Error loading products from Supabase:', productsResult.error);
                 const storedProducts = localStorage.getItem('umkm_products');
@@ -56,7 +52,6 @@ async function loadDashboardData() {
         
         dashboardData.lastLogin = new Date().toLocaleString('id-ID');
         
-        console.log('📊 Dashboard data loaded:', dashboardData);
         
     } catch (error) {
         console.error('❌ Error loading dashboard data:', error);
@@ -363,7 +358,6 @@ function generateDynamicTips() {
 
 function setupRealTimeUpdates() {
     setInterval(async () => {
-        console.log('🔄 Auto-refreshing dashboard data...');
         await loadDashboardData();
         renderMetrics();
         renderCategoryChart();
@@ -371,7 +365,6 @@ function setupRealTimeUpdates() {
     
     window.addEventListener('storage', function(e) {
         if (e.key && e.key.startsWith('umkm_')) {
-            console.log('📊 Data updated from another tab');
             const aiUsage = localStorage.getItem('umkm_ai_usage');
             const contentGenerated = localStorage.getItem('umkm_content_generated');
             const activities = localStorage.getItem('umkm_activities');
@@ -427,7 +420,6 @@ function trackActivity(type, text, icon = '📝') {
     
     localStorage.setItem('umkm_activities', JSON.stringify(activities));
     
-    console.log('📋 Activity tracked:', text);
 }
 
 function incrementAIUsage() {
@@ -452,15 +444,12 @@ function showDashboardLoading() {
     updateElement('ai-usage-count', 'Loading...');
     updateElement('content-generated', 'Loading...');
     
-    console.log('📊 Dashboard loading state shown');
 }
 
 function hideDashboardLoading() {
-    console.log('📊 Dashboard loading state hidden');
 }
 
 async function refreshDashboard() {
-    console.log('🔄 Manual dashboard refresh initiated');
     showDashboardLoading();
     
     try {

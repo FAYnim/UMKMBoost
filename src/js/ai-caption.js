@@ -1,5 +1,4 @@
 function initializeCaptionPage() {
-    console.log('✍️ Initializing AI Caption page');
     
     // Setup form
     const form = document.getElementById('captionForm');
@@ -36,7 +35,6 @@ async function handleCaptionSubmit(event) {
 }
 
 async function generateCaption(formData) {
-    console.log('🔄 Generating caption with data:', formData);
     const selectedProduct = getSelectedProduct();
     let prompt = '';
     
@@ -46,27 +44,21 @@ async function generateCaption(formData) {
     
     try {
         const instructionFile = 'caption.md';
-        console.log('📁 Instruction file:', instructionFile);
         
         prompt = createCaptionPrompt(formData);
-        console.log('💭 AI Prompt:', prompt);
         
         if (typeof window.callAI !== 'function') {
             throw new Error('callAI function not available');
         }
         
-        console.log('🤖 Calling AI...');
 
         const aiResponse = await window.callAI(prompt, instructionFile, 'caption');
-        console.log('📨 AI Response:', aiResponse);
         
         const captionData = parseAICaptionResponse(aiResponse, formData);
-        console.log('🎯 Parsed caption:', captionData);
         
         displayCaption(captionData);
         await Utils.logAIUsage('caption', prompt, captionData, selectedProduct ? selectedProduct.id : null);
         
-        console.log('✅ AI Caption generated successfully');
         
     } catch (error) {
         console.error('❌ Error generating caption:', error);
@@ -84,7 +76,6 @@ async function generateCaption(formData) {
 function createCaptionPrompt(formData) {
     const { topic, tone, length, cta } = formData;
     
-    console.log('🔍 Checking getSelectedProduct availability:', typeof getSelectedProduct);
     const selectedProduct = getSelectedProduct();
     
     const toneMap = {
@@ -238,7 +229,6 @@ function displayCaption(captionData) {
     Utils.showElement('captionResults');
     Utils.scrollToElement('captionResults', 100);
     
-    console.log('✅ Caption displayed successfully');
 }
 
 // Dummy data untuk testing caption
@@ -343,7 +333,6 @@ function loadSelectedProductForCaption() {
     const selectedProduct = getSelectedProduct();
     
     if (selectedProduct) {
-        console.log('✅ Selected product found:', selectedProduct);
         
         // Pre-fill topic dengan nama produk
         const topicInput = document.getElementById('captionTopic');

@@ -116,7 +116,6 @@ export async function handler(event) {
           aiError.message && aiError.message.includes('quota') ||
           aiError.message && aiError.message.includes('RESOURCE_EXHAUSTED')) {
         
-        console.log('AI Limit: Free tier quota exceeded, switching to production API key');
         
         ai = new GoogleGenAI({
           apiKey: process.env.GEMINI_API_KEY_PROD
@@ -146,7 +145,6 @@ export async function handler(event) {
       }
     }
   } catch (err) {
-    console.log('AI Limit: Error occurred -', err.message);
     return {
       statusCode: 500,
       body: JSON.stringify({ error: err.message })

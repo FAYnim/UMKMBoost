@@ -1,5 +1,4 @@
 function initializePosterPage() {
-    console.log('🎨 Initializing AI Poster page');
     
     // Setup form submit event
     const form = document.getElementById('posterForm');
@@ -34,7 +33,6 @@ function handlePosterSubmit(event) {
 
 // Fungsi utama untuk generate poster
 function generatePoster(formData) {
-    console.log('🔄 Generating poster with data:', formData);
     
     // Show loading
     Utils.showButtonLoading('generatePosterBtn', 'Generating...');
@@ -87,7 +85,6 @@ function displayPoster(posterData) {
     Utils.showElement('posterResults');
     Utils.scrollToElement('posterResults', 100);
     
-    console.log('✅ Poster layout displayed successfully');
 }
 
 // Dummy data untuk testing poster

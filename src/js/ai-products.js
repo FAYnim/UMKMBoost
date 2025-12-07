@@ -2,7 +2,6 @@ let products = [];
 let editingProductId = null;
 
 async function initializeProductsPage() {
-    console.log('📦 Initialize Products Page');
     
     // Setup image
     setupImageInputSwitcher();
@@ -119,7 +118,6 @@ async function loadProducts() {
         
         if (result.success) {
             products = result.data;
-            console.log(`✅ Loaded ${products.length} products from Supabase`);
         } else {
             console.error('❌ Error loading products:', result.error);
             products = [];
@@ -583,7 +581,6 @@ function clearSelectedProduct() {
 
 // Fungsi untuk refresh products (reload dari database)
 async function refreshProducts() {
-    console.log('🔄 Refreshing products...');
     
     // Disable tombol saat refresh
     disableAddProductButtons();

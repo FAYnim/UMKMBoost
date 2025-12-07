@@ -1,24 +1,20 @@
 // Fungsi untuk initialize halaman ideas
 function initializeIdeasPage() {
-    console.log('💡 Initializing AI Ideas page');
     
     // Setup form submit event
     const form = document.getElementById('ideasForm');
     if (form) {
-        console.log('✅ Form found, adding event listener');
         form.addEventListener('submit', handleIdeasSubmit);
     } else {
         console.error('❌ Form not found!');
     }
     
     // Check if callAI is available
-    console.log('🔍 Checking callAI availability:', typeof window.callAI);
 }
 
 // Handle form submit untuk generate ideas
 async function handleIdeasSubmit(event) {
     event.preventDefault();
-    console.log('🚀 Form submitted, preventing default');
     
     // Ambil form data
     const formData = {
@@ -27,7 +23,6 @@ async function handleIdeasSubmit(event) {
         platform: document.getElementById('platform').value
     };
     
-    console.log('📝 Form data collected:', formData);
     
     // Validate form
     const validation = Utils.validateFormData ? Utils.validateFormData(formData, ['businessType', 'contentGoal', 'platform']) : { isValid: true };
@@ -37,7 +32,6 @@ async function handleIdeasSubmit(event) {
         return;
     }
     
-    console.log('✅ Form validation passed');
     
     // Generate ideas
     try {
@@ -50,7 +44,6 @@ async function handleIdeasSubmit(event) {
 
 // Fungsi utama untuk generate ideas
 async function generateIdeas(formData) {
-    console.log('🔄 Generating ideas with data:', formData);
     const selectedProduct = getSelectedProduct();
     let prompt = '';
     
@@ -62,11 +55,9 @@ async function generateIdeas(formData) {
     try {
         // Map content goal to instruction file
         const instructionFile = getInstructionFile(formData.contentGoal);
-        console.log('📁 Instruction file:', instructionFile);
         
         // Create AI prompt
         prompt = createIdeasPrompt(formData);
-        console.log('💭 AI Prompt:', prompt);
         
         // Check if callAI is available
         if (typeof window.callAI !== 'function') {
@@ -74,20 +65,16 @@ async function generateIdeas(formData) {
             throw new Error('AI function not available');
         }
         
-        console.log('🤖 Calling AI...');
         // Call AI API
         const aiResponse = await window.callAI(prompt, instructionFile, formData.contentGoal);
-        console.log('📨 AI Response:', aiResponse);
         
         // Parse and format AI response
         const ideas = parseAIResponse(aiResponse, formData);
-        console.log('🎯 Parsed ideas:', ideas);
         
         // Display results
         displayIdeas(ideas);
         await Utils.logAIUsage('ideas', prompt, ideas, selectedProduct ? selectedProduct.id : null);
         
-        console.log('✅ AI Ideas generated successfully');
         
     } catch (error) {
         console.error('❌ Error generating ideas:', error);
@@ -121,7 +108,6 @@ function getInstructionFile(contentGoal) {
 function createIdeasPrompt(formData) {
     const { businessType, contentGoal, platform } = formData;
 
-    console.log('🔍 Checking getSelectedProduct availability:', typeof getSelectedProduct);
     const selectedProduct = getSelectedProduct();
     console.table(selectedProduct)
     
@@ -250,7 +236,6 @@ function displayIdeas(ideas) {
     Utils.showElement('ideasResults');
     Utils.scrollToElement('ideasResults', 100);
     
-    console.log(`✅ Displayed ${ideas.length} ideas`);
 }
 
 // Fungsi untuk create idea card element

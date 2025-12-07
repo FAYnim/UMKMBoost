@@ -15,7 +15,6 @@ async function callAI(prompt, instructionsFile, contentGoal) {
     
     // chek kuota limit
     if (error && (error.includes('429') || error.includes('quota') || error.includes('RESOURCE_EXHAUSTED'))) {
-      console.log('AI Limit: Free tier quota exceeded, system automatically switched to production API');
     }
     
     throw new Error(error || 'Gagal memanggil AI');
@@ -25,7 +24,6 @@ async function callAI(prompt, instructionsFile, contentGoal) {
   
   // Log if production API key was used
   if (warning) {
-    console.log('AI Limit:', warning);
   }
   
   return output;

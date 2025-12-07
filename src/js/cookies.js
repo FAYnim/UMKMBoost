@@ -6,7 +6,6 @@ function setCookie(name, value, days) {
     
     document.cookie = name + "=" + value + ";" + expires + ";path=/";
     
-    console.log(`Cookie '${name}' berhasil disimpan untuk ${days} hari`);
 }
 
 function getCookie(name) {
@@ -30,7 +29,6 @@ function getCookie(name) {
 
 function deleteCookie(name) {
     document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    console.log(`Cookie '${name}' berhasil dihapus`);
 }
 
 function hasCookie(name) {
@@ -42,7 +40,6 @@ function saveUserLogin(username, rememberDays = 7) {
     setCookie("umkm_user", username, rememberDays);
     setCookie("umkm_login", "true", rememberDays);
     
-    console.log(`User ${username} tersimpan untuk ${rememberDays} hari`);
 }
 
 function isUserLoggedIn() {
@@ -59,7 +56,6 @@ function getLoggedInUser() {
 function logoutUser() {
     deleteCookie("umkm_user");
     deleteCookie("umkm_login");
-    console.log("User berhasil logout");
 }
 
 function saveUserPreference(key, value, days = 30) {
@@ -113,8 +109,6 @@ function getContentHistory(contentType) {
 }
 
 function showAllCookies() {
-    console.log("Semua cookie yang tersimpan:");
-    console.log(document.cookie);
 }
 
 function saveAuthSession(email, rememberMe = false) {
@@ -126,7 +120,6 @@ function saveAuthSession(email, rememberMe = false) {
     
     setCookie("umkm_last_login", new Date().toISOString(), 7);
     
-    console.log(`Session tersimpan untuk email: ${email}`);
 }
 
 function getAuthSession() {
@@ -141,7 +134,6 @@ function clearAuthSession() {
     deleteCookie("umkm_auth_email");
     deleteCookie("umkm_remember_me");
     deleteCookie("umkm_last_login");
-    console.log("Auth session dihapus");
 }
 
 // Cek apakah user punya remember me aktif
@@ -192,12 +184,6 @@ function isNewUser() {
 
 // Tampilkan debug info cookie (untuk development)
 function showCookieDebugInfo() {
-    console.log('=== DEBUG INFO COOKIE ===');
-    console.log('Auth Session:', getAuthSession());
-    console.log('Login Stats:', getLoginStats());
-    console.log('Content History:', getContentHistory('caption'));
-    console.log('All Cookies:', document.cookie);
-    console.log('========================');
 }
 
 // ===== EXPORT FUNGSI KE WINDOW SCOPE =====
@@ -224,4 +210,3 @@ window.getContentHistory = getContentHistory;
 window.saveUserPreference = saveUserPreference;
 window.getUserPreference = getUserPreference;
 
-console.log('✅ Cookie functions loaded successfully!');

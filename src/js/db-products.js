@@ -36,7 +36,6 @@ const ProductsDB = {
                 throw new Error(result.error);
             }
 
-            console.log('✅ Product created:', result.data);
             return { success: true, data: result.data };
 
         } catch (error) {
@@ -53,7 +52,6 @@ const ProductsDB = {
                 throw new Error(result.error);
             }
 
-            console.log(`✅ Loaded ${result.data.length} products`);
             return { success: true, data: result.data };
 
         } catch (error) {
@@ -91,7 +89,6 @@ const ProductsDB = {
                 throw new Error(result.error);
             }
 
-            console.log('✅ Product updated:', result.data);
             return { success: true, data: result.data };
 
         } catch (error) {
@@ -110,7 +107,6 @@ const ProductsDB = {
                 throw new Error(result.error);
             }
 
-            console.log('✅ Product deleted:', result.data);
             return { success: true, data: result.data };
 
         } catch (error) {

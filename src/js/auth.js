@@ -279,12 +279,10 @@ const Auth = {
             const { success, session } = await this.getSession();
             
             if (success && session && session.user) {
-                console.log('Valid session found:', session.user.email);
                 return { authenticated: true, user: session.user };
             }
             
             if (typeof window.hasRememberMe === 'function' && window.hasRememberMe()) {
-                console.log('No active session but remember me is enabled');
                 if (typeof window.clearAuthSession === 'function') {
                     window.clearAuthSession();
                 }
